@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package store;
+
+// Tag define structure for message Tag.
+message Tag {
+  uint64 id = 1;
+  string name = 2;
+}
+
+// TagService declares all RPC calls for tags related functions.
+service TagService {
+  rpc UpsertTags(UpsertTagsRequest) returns (UpsertTagsResponse) {}
+}
+
+// UpsertTags defines request for RPC call.
+message UpsertTagsRequest {
+  repeated Tag tags = 1;
+}
+
+// UpsertTagsResponse defines response for RPC call. 
+message UpsertTagsResponse {
+  repeated Tag tags = 1;
+}
