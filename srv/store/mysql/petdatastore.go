@@ -52,10 +52,16 @@ func (p *petDataStore) FindPetById(id int64) (*store.Pet, error) {
 	return &pet, nil
 }
 
-func (p *petDataStore) UpdatePet(pet *store.UpdatePetRequest) error {
-	if _, err := p.db.Exec("UPDATE pets SET name=?, status=? WHERE id = ?", pet.Name, pet.Status, pet.Id); err != nil {
-		return err
+func (p *petDataStore) UpdatePet(pet *store.UpdatePetRequest) (int64, error) {
+	r, err := p.db.Exec("UPDATE pets SET name=?, status=? WHERE id = ?", pet.Name, pet.Status, pet.Id)
+	if err != nil {
+		return 0, err
 	}
 
-	return nil
+	rowsAffected, err := r.RowsAffected()
+	if err != nil {
+		return 0, err
+	}
+
+	return rowsAffected, nil
 }

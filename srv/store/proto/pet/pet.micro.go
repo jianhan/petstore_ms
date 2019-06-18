@@ -35,7 +35,7 @@ var _ server.Option
 
 type PetService interface {
 	InsertPet(ctx context.Context, in *InsertPetRequest, opts ...client.CallOption) (*InsertPetResponse, error)
-	UpdatePet(ctx context.Context, in *UpdatePetRequest, opts ...client.CallOption) (*Empty, error)
+	UpdatePet(ctx context.Context, in *UpdatePetRequest, opts ...client.CallOption) (*UpdatePetResponse, error)
 }
 
 type petService struct {
@@ -66,9 +66,9 @@ func (c *petService) InsertPet(ctx context.Context, in *InsertPetRequest, opts .
 	return out, nil
 }
 
-func (c *petService) UpdatePet(ctx context.Context, in *UpdatePetRequest, opts ...client.CallOption) (*Empty, error) {
+func (c *petService) UpdatePet(ctx context.Context, in *UpdatePetRequest, opts ...client.CallOption) (*UpdatePetResponse, error) {
 	req := c.c.NewRequest(c.name, "PetService.UpdatePet", in)
-	out := new(Empty)
+	out := new(UpdatePetResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -80,13 +80,13 @@ func (c *petService) UpdatePet(ctx context.Context, in *UpdatePetRequest, opts .
 
 type PetServiceHandler interface {
 	InsertPet(context.Context, *InsertPetRequest, *InsertPetResponse) error
-	UpdatePet(context.Context, *UpdatePetRequest, *Empty) error
+	UpdatePet(context.Context, *UpdatePetRequest, *UpdatePetResponse) error
 }
 
 func RegisterPetServiceHandler(s server.Server, hdlr PetServiceHandler, opts ...server.HandlerOption) error {
 	type petService interface {
 		InsertPet(ctx context.Context, in *InsertPetRequest, out *InsertPetResponse) error
-		UpdatePet(ctx context.Context, in *UpdatePetRequest, out *Empty) error
+		UpdatePet(ctx context.Context, in *UpdatePetRequest, out *UpdatePetResponse) error
 	}
 	type PetService struct {
 		petService
@@ -103,6 +103,6 @@ func (h *petServiceHandler) InsertPet(ctx context.Context, in *InsertPetRequest,
 	return h.PetServiceHandler.InsertPet(ctx, in, out)
 }
 
-func (h *petServiceHandler) UpdatePet(ctx context.Context, in *UpdatePetRequest, out *Empty) error {
+func (h *petServiceHandler) UpdatePet(ctx context.Context, in *UpdatePetRequest, out *UpdatePetResponse) error {
 	return h.PetServiceHandler.UpdatePet(ctx, in, out)
 }

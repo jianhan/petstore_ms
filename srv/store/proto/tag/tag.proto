@@ -1,9 +1,0 @@
-syntax = "proto3";
-
-package store;
-
-// Tag define structure for message Tag.
-message Tag {
-  uint64 id = 1;
-  string name = 2;
-}

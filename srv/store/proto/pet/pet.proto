@@ -5,7 +5,7 @@ package store;
 // PetService declares all RPC calls for tags related functions.
 service PetService {
     rpc InsertPet(InsertPetRequest) returns (InsertPetResponse) {}
-    rpc UpdatePet(UpdatePetRequest) returns (Empty) {}
+    rpc UpdatePet(UpdatePetRequest) returns (UpdatePetResponse) {}
 }
 
 // InsertPetRequest defines request for RPC call insert pet.
@@ -25,9 +25,9 @@ message UpdatePetRequest {
     PetStatus status = 3;
 }
 
-// Empty defines an empty message.
-message Empty {
-
+// UpdatePetResponse defines response for UpdatePetRequest RPC call.
+message UpdatePetResponse {
+    int64 rows_affected = 1;
 }
 
 // Pet define structure for message Pet.

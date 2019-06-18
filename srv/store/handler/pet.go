@@ -29,8 +29,8 @@ func (p *petHandler) InsertPet(ctx context.Context, req *store.InsertPetRequest,
 	return nil
 }
 
-func (p *petHandler) UpdatePet(ctx context.Context, req *store.UpdatePetRequest, rsp *store.Empty) error {
-	if err := p.petDataStore.UpdatePet(req); err != nil {
+func (p *petHandler) UpdatePet(ctx context.Context, req *store.UpdatePetRequest, rsp *store.UpdatePetResponse) (err error) {
+	if rsp.RowsAffected, err = p.petDataStore.UpdatePet(req); err != nil {
 		return err
 	}
 
