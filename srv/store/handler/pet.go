@@ -12,6 +12,14 @@ type petHandler struct {
 }
 
 func (p *petHandler) InsertPet(ctx context.Context, req *store.InsertPetRequest, rsp *store.InsertPetResponse) error {
+	if err := req.Validate(); err != nil {
+		return err
+	}
+
+	if err := req.Pet.Validate(); err != nil {
+		return err
+	}
+
 	lastInsertID, err := p.petDataStore.InsertPet(req.Pet)
 	if err != nil {
 		return err
