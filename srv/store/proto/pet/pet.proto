@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package store;
+
+// PetService declares all RPC calls for tags related functions.
+service PetService {
+    rpc UpsertPets(UpsertPetsRequest) returns (UpsertPetsResponse) {}
+}
+
+// UpsertPetsRequest defines request for RPC call to upsert pets.
+message UpsertPetsRequest {
+    repeated Pet pets = 1;
+}
+
+// UpsertPetsResponse defines response for RPC call. 
+message UpsertPetsResponse {
+    repeated Pet pets = 1;
+}
+
+// Pet define structure for message Pet.
+message Pet {
+    uint64 id = 1;
+    string name = 2;
+    PetStatus status = 3;
+}
+
+// PetStatus defines pet status
+enum PetStatus {
+    AVAILABLE = 0;
+    PENDING = 1;
+    SOLD = 2;
+}

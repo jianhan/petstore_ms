@@ -8,21 +8,20 @@ BINARY_NAME=store
 BINARY_UNIX=$(BINARY_NAME)_unix
 DIR_NAME=store
 
-all: test build pb injectpb lint
+all: test build pb lint
 
-build:
-	GOOS=linux GOARCH=amd64 $(GOBUILD) -o $(BINARY_NAME) .
-#	docker build -t $(DIR_NAME) .
+build: 
+	$(GOBUILD) -o $(BINARY_NAME) -v
 
 test:
 	$(GOTEST) -v ./...
+
 clean:
 	$(GOCLEAN)
 	rm -f $(BINARY_NAME)
-	rm -f $(BINARY_UNIX)
 
 run:
-	docker run $(DIR_NAME)
+	./$(BINARY_NAME) --registry=consul
 
 pb:
 	for f in proto/**/*.proto; do \
