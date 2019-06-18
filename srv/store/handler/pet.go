@@ -12,11 +12,13 @@ type petHandler struct {
 }
 
 func (p *petHandler) UpsertPets(ctx context.Context, req *store.UpsertPetsRequest, rsp *store.UpsertPetsResponse) error {
-	// p.petDataStore.UpsertPets(req.Pets)
-	rsp.Pets = nil
+	if err := p.petDataStore.UpsertPets(req.Pets); err != nil {
+		return err
+	}
+
 	return nil
 }
 
-func NewPetServiceHandler() store.PetServiceHandler {
-	return &petHandler{}
+func NewPetServiceHandler(petDataStore datastore.PetDataStore) store.PetServiceHandler {
+	return &petHandler{petDataStore: petDataStore}
 }

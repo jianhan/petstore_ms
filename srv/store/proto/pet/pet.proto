@@ -14,7 +14,6 @@ message UpsertPetsRequest {
 
 // UpsertPetsResponse defines response for RPC call. 
 message UpsertPetsResponse {
-    repeated Pet pets = 1;
 }
 
 // Pet define structure for message Pet.
@@ -22,6 +21,7 @@ message Pet {
     uint64 id = 1;
     string name = 2;
     PetStatus status = 3;
+    string photoUrls = 4;
 }
 
 // PetStatus defines pet status
