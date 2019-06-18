@@ -2,8 +2,7 @@ package mysql
 
 import (
 	"database/sql"
-
-	"github.com/sirupsen/logrus"
+	"encoding/json"
 
 	"github.com/jianhan/petstore_ms/srv/store/datastore"
 	store "github.com/jianhan/petstore_ms/srv/store/proto/pet"
@@ -17,36 +16,44 @@ type petDataStore struct {
 	db *sql.DB
 }
 
-func (p *petDataStore) UpsertPets(pets []*store.Pet) error {
-	for _, pet := range pets {
-		if pet.Id > 0 {
-			// update
-			if err := p.updatePet(pet); err != nil {
-				return err
-			}
-		} else {
-			// insert
-			if err := p.insertPet(pet); err != nil {
-				return err
-			}
-		}
+func (p *petDataStore) InsertPet(pet *store.Pet) (int64, error) {
+	photoUrlsStr, err := json.Marshal(pet.PhotoUrls)
+	if err != nil {
+		return 0, err
 	}
 
-	return nil
-}
-
-func (p *petDataStore) insertPet(pet *store.Pet) error {
-	if _, err := p.db.Exec("INSERT INTO pets (name, photo_urls, status) VALUES(?, ?, ?)", pet.Name, pet.PhotoUrls, pet.Status); err != nil {
-		logrus.Error(err)
-		return err
+	r, err := p.db.Exec("INSERT INTO pets (name, photo_urls, status) VALUES(?, ?, ?)", pet.Name, photoUrlsStr, pet.Status)
+	if err != nil {
+		return 0, err
 	}
 
-	return nil
+	// get last insert id
+	lastInsertId, err := r.LastInsertId()
+	if err != nil {
+		return 0, err
+	}
+
+	return lastInsertId, nil
 }
 
-func (p *petDataStore) updatePet(pet *store.Pet) error {
-	if _, err := p.db.Exec("UPDATE pets SET name=?, photo_urls=?, status=? WHERE id = ?", pet.Name, pet.PhotoUrls, pet.Status, pet.Id); err != nil {
-		logrus.Error(err)
+func (p *petDataStore) FindPetById(id int64) (*store.Pet, error) {
+	pet := store.Pet{}
+	photoUrlsStr := ""
+	err := p.db.QueryRow("SELECT id, name, photo_urls, status from pets WHERE id = ?", id).Scan(&pet.Id, &pet.Name, &photoUrlsStr, &pet.Status)
+	if err != nil {
+		return nil, err
+	}
+
+	// convert json string to slice for photo urls
+	if err := json.Unmarshal([]byte(photoUrlsStr), &pet.PhotoUrls); err != nil {
+		return nil, err
+	}
+
+	return &pet, nil
+}
+
+func (p *petDataStore) UpdatePet(pet *store.UpdatePetRequest) error {
+	if _, err := p.db.Exec("UPDATE pets SET name=?, status=? WHERE id = ?", pet.Name, pet.Status, pet.Id); err != nil {
 		return err
 	}
 

@@ -49,84 +49,180 @@ func (PetStatus) EnumDescriptor() ([]byte, []int) {
 	return fileDescriptor_b7b87aff2c076168, []int{0}
 }
 
-// UpsertPetsRequest defines request for RPC call to upsert pets.
-type UpsertPetsRequest struct {
-	Pets                 []*Pet   `protobuf:"bytes,1,rep,name=pets,proto3" json:"pets,omitempty"`
+// InsertPetRequest defines request for RPC call insert pet.
+type InsertPetRequest struct {
+	Pet                  *Pet     `protobuf:"bytes,1,opt,name=pet,proto3" json:"pet,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *UpsertPetsRequest) Reset()         { *m = UpsertPetsRequest{} }
-func (m *UpsertPetsRequest) String() string { return proto.CompactTextString(m) }
-func (*UpsertPetsRequest) ProtoMessage()    {}
-func (*UpsertPetsRequest) Descriptor() ([]byte, []int) {
+func (m *InsertPetRequest) Reset()         { *m = InsertPetRequest{} }
+func (m *InsertPetRequest) String() string { return proto.CompactTextString(m) }
+func (*InsertPetRequest) ProtoMessage()    {}
+func (*InsertPetRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_b7b87aff2c076168, []int{0}
 }
 
-func (m *UpsertPetsRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_UpsertPetsRequest.Unmarshal(m, b)
+func (m *InsertPetRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_InsertPetRequest.Unmarshal(m, b)
 }
-func (m *UpsertPetsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_UpsertPetsRequest.Marshal(b, m, deterministic)
+func (m *InsertPetRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_InsertPetRequest.Marshal(b, m, deterministic)
 }
-func (m *UpsertPetsRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_UpsertPetsRequest.Merge(m, src)
+func (m *InsertPetRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_InsertPetRequest.Merge(m, src)
 }
-func (m *UpsertPetsRequest) XXX_Size() int {
-	return xxx_messageInfo_UpsertPetsRequest.Size(m)
+func (m *InsertPetRequest) XXX_Size() int {
+	return xxx_messageInfo_InsertPetRequest.Size(m)
 }
-func (m *UpsertPetsRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_UpsertPetsRequest.DiscardUnknown(m)
+func (m *InsertPetRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_InsertPetRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_UpsertPetsRequest proto.InternalMessageInfo
+var xxx_messageInfo_InsertPetRequest proto.InternalMessageInfo
 
-func (m *UpsertPetsRequest) GetPets() []*Pet {
+func (m *InsertPetRequest) GetPet() *Pet {
 	if m != nil {
-		return m.Pets
+		return m.Pet
 	}
 	return nil
 }
 
-// UpsertPetsResponse defines response for RPC call.
-type UpsertPetsResponse struct {
+// InsertPetResponse defines response for InsertPetsRequest RPC call.
+type InsertPetResponse struct {
+	Pet                  *Pet     `protobuf:"bytes,1,opt,name=pet,proto3" json:"pet,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *UpsertPetsResponse) Reset()         { *m = UpsertPetsResponse{} }
-func (m *UpsertPetsResponse) String() string { return proto.CompactTextString(m) }
-func (*UpsertPetsResponse) ProtoMessage()    {}
-func (*UpsertPetsResponse) Descriptor() ([]byte, []int) {
+func (m *InsertPetResponse) Reset()         { *m = InsertPetResponse{} }
+func (m *InsertPetResponse) String() string { return proto.CompactTextString(m) }
+func (*InsertPetResponse) ProtoMessage()    {}
+func (*InsertPetResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_b7b87aff2c076168, []int{1}
 }
 
-func (m *UpsertPetsResponse) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_UpsertPetsResponse.Unmarshal(m, b)
+func (m *InsertPetResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_InsertPetResponse.Unmarshal(m, b)
 }
-func (m *UpsertPetsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_UpsertPetsResponse.Marshal(b, m, deterministic)
+func (m *InsertPetResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_InsertPetResponse.Marshal(b, m, deterministic)
 }
-func (m *UpsertPetsResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_UpsertPetsResponse.Merge(m, src)
+func (m *InsertPetResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_InsertPetResponse.Merge(m, src)
 }
-func (m *UpsertPetsResponse) XXX_Size() int {
-	return xxx_messageInfo_UpsertPetsResponse.Size(m)
+func (m *InsertPetResponse) XXX_Size() int {
+	return xxx_messageInfo_InsertPetResponse.Size(m)
 }
-func (m *UpsertPetsResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_UpsertPetsResponse.DiscardUnknown(m)
+func (m *InsertPetResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_InsertPetResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_UpsertPetsResponse proto.InternalMessageInfo
+var xxx_messageInfo_InsertPetResponse proto.InternalMessageInfo
+
+func (m *InsertPetResponse) GetPet() *Pet {
+	if m != nil {
+		return m.Pet
+	}
+	return nil
+}
+
+// UpdatePetRequest defines request for RPC call to update pet.
+type UpdatePetRequest struct {
+	Id                   uint64    `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name                 string    `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Status               PetStatus `protobuf:"varint,3,opt,name=status,proto3,enum=store.PetStatus" json:"status,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
+	XXX_unrecognized     []byte    `json:"-"`
+	XXX_sizecache        int32     `json:"-"`
+}
+
+func (m *UpdatePetRequest) Reset()         { *m = UpdatePetRequest{} }
+func (m *UpdatePetRequest) String() string { return proto.CompactTextString(m) }
+func (*UpdatePetRequest) ProtoMessage()    {}
+func (*UpdatePetRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b7b87aff2c076168, []int{2}
+}
+
+func (m *UpdatePetRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_UpdatePetRequest.Unmarshal(m, b)
+}
+func (m *UpdatePetRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_UpdatePetRequest.Marshal(b, m, deterministic)
+}
+func (m *UpdatePetRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UpdatePetRequest.Merge(m, src)
+}
+func (m *UpdatePetRequest) XXX_Size() int {
+	return xxx_messageInfo_UpdatePetRequest.Size(m)
+}
+func (m *UpdatePetRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_UpdatePetRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_UpdatePetRequest proto.InternalMessageInfo
+
+func (m *UpdatePetRequest) GetId() uint64 {
+	if m != nil {
+		return m.Id
+	}
+	return 0
+}
+
+func (m *UpdatePetRequest) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *UpdatePetRequest) GetStatus() PetStatus {
+	if m != nil {
+		return m.Status
+	}
+	return PetStatus_AVAILABLE
+}
+
+// Empty defines an empty message.
+type Empty struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *Empty) Reset()         { *m = Empty{} }
+func (m *Empty) String() string { return proto.CompactTextString(m) }
+func (*Empty) ProtoMessage()    {}
+func (*Empty) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b7b87aff2c076168, []int{3}
+}
+
+func (m *Empty) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_Empty.Unmarshal(m, b)
+}
+func (m *Empty) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_Empty.Marshal(b, m, deterministic)
+}
+func (m *Empty) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Empty.Merge(m, src)
+}
+func (m *Empty) XXX_Size() int {
+	return xxx_messageInfo_Empty.Size(m)
+}
+func (m *Empty) XXX_DiscardUnknown() {
+	xxx_messageInfo_Empty.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Empty proto.InternalMessageInfo
 
 // Pet define structure for message Pet.
 type Pet struct {
 	Id                   uint64    `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
 	Name                 string    `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	Status               PetStatus `protobuf:"varint,3,opt,name=status,proto3,enum=store.PetStatus" json:"status,omitempty"`
-	PhotoUrls            string    `protobuf:"bytes,4,opt,name=photoUrls,proto3" json:"photoUrls,omitempty"`
+	PhotoUrls            []string  `protobuf:"bytes,4,rep,name=photo_urls,json=photoUrls,proto3" json:"photo_urls,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
 	XXX_unrecognized     []byte    `json:"-"`
 	XXX_sizecache        int32     `json:"-"`
@@ -136,7 +232,7 @@ func (m *Pet) Reset()         { *m = Pet{} }
 func (m *Pet) String() string { return proto.CompactTextString(m) }
 func (*Pet) ProtoMessage()    {}
 func (*Pet) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b7b87aff2c076168, []int{2}
+	return fileDescriptor_b7b87aff2c076168, []int{4}
 }
 
 func (m *Pet) XXX_Unmarshal(b []byte) error {
@@ -178,39 +274,44 @@ func (m *Pet) GetStatus() PetStatus {
 	return PetStatus_AVAILABLE
 }
 
-func (m *Pet) GetPhotoUrls() string {
+func (m *Pet) GetPhotoUrls() []string {
 	if m != nil {
 		return m.PhotoUrls
 	}
-	return ""
+	return nil
 }
 
 func init() {
 	proto.RegisterEnum("store.PetStatus", PetStatus_name, PetStatus_value)
-	proto.RegisterType((*UpsertPetsRequest)(nil), "store.UpsertPetsRequest")
-	proto.RegisterType((*UpsertPetsResponse)(nil), "store.UpsertPetsResponse")
+	proto.RegisterType((*InsertPetRequest)(nil), "store.InsertPetRequest")
+	proto.RegisterType((*InsertPetResponse)(nil), "store.InsertPetResponse")
+	proto.RegisterType((*UpdatePetRequest)(nil), "store.UpdatePetRequest")
+	proto.RegisterType((*Empty)(nil), "store.Empty")
 	proto.RegisterType((*Pet)(nil), "store.Pet")
 }
 
 func init() { proto.RegisterFile("proto/pet/pet.proto", fileDescriptor_b7b87aff2c076168) }
 
 var fileDescriptor_b7b87aff2c076168 = []byte{
-	// 260 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x6c, 0x50, 0x41, 0x4b, 0xf3, 0x40,
-	0x10, 0xed, 0x26, 0xf9, 0xfa, 0x99, 0x29, 0x96, 0x38, 0x7a, 0x58, 0x45, 0x24, 0xe4, 0x14, 0x3c,
-	0x44, 0x4c, 0x7f, 0x41, 0xb4, 0x45, 0x0a, 0xa1, 0xc6, 0x94, 0x7a, 0xaf, 0x76, 0xc0, 0x80, 0x76,
-	0xb7, 0x99, 0xa9, 0xbf, 0x5f, 0xba, 0x04, 0x23, 0xe8, 0x61, 0x61, 0xe7, 0xbd, 0x79, 0x33, 0xf3,
-	0x1e, 0x9c, 0xda, 0xd6, 0x88, 0xb9, 0xb1, 0x24, 0x87, 0x97, 0xb9, 0x0a, 0xff, 0xb1, 0x98, 0x96,
-	0x92, 0x09, 0x9c, 0xac, 0x2c, 0x53, 0x2b, 0x15, 0x09, 0xd7, 0xb4, 0xdb, 0x13, 0x0b, 0x5e, 0x41,
-	0x60, 0x49, 0x58, 0xab, 0xd8, 0x4f, 0x47, 0x39, 0x64, 0xae, 0x35, 0xab, 0x48, 0x6a, 0x87, 0x27,
-	0x67, 0x80, 0x3f, 0x45, 0x6c, 0xcd, 0x96, 0x29, 0xd9, 0x81, 0x5f, 0x91, 0xe0, 0x18, 0xbc, 0x66,
-	0xa3, 0x55, 0xac, 0xd2, 0xa0, 0xf6, 0x9a, 0x0d, 0x22, 0x04, 0xdb, 0xf5, 0x07, 0x69, 0x2f, 0x56,
-	0x69, 0x58, 0xbb, 0x3f, 0xa6, 0x30, 0x64, 0x59, 0xcb, 0x9e, 0xb5, 0x1f, 0xab, 0x74, 0x9c, 0x47,
-	0xfd, 0x8a, 0xa5, 0xc3, 0xeb, 0x8e, 0xc7, 0x4b, 0x08, 0xed, 0x9b, 0x11, 0xb3, 0x6a, 0xdf, 0x59,
-	0x07, 0x6e, 0x44, 0x0f, 0x5c, 0xdf, 0x42, 0xf8, 0x2d, 0xc1, 0x63, 0x08, 0x8b, 0xe7, 0x62, 0x5e,
-	0x16, 0x77, 0xe5, 0x2c, 0x1a, 0xe0, 0x08, 0xfe, 0x57, 0xb3, 0xc5, 0x74, 0xbe, 0x78, 0x88, 0x14,
-	0x1e, 0x41, 0xb0, 0x7c, 0x2c, 0xa7, 0x91, 0x97, 0x3f, 0x01, 0x1c, 0x24, 0xd4, 0x7e, 0x36, 0xaf,
-	0x84, 0xf7, 0x00, 0xbd, 0x13, 0xd4, 0xdd, 0x19, 0xbf, 0x12, 0xb9, 0x38, 0xff, 0x83, 0xe9, 0x6c,
-	0x0f, 0x5e, 0x86, 0x2e, 0xd1, 0xc9, 0x57, 0x00, 0x00, 0x00, 0xff, 0xff, 0xaf, 0x35, 0x04, 0x7e,
-	0x68, 0x01, 0x00, 0x00,
+	// 306 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x92, 0x4f, 0x4b, 0x02, 0x41,
+	0x18, 0xc6, 0xdd, 0x3f, 0x6a, 0xf3, 0x5a, 0x32, 0xbd, 0x1d, 0x5a, 0xa4, 0x60, 0xd9, 0xd3, 0xd2,
+	0xc1, 0xd2, 0xfa, 0x00, 0x19, 0x4a, 0x08, 0x62, 0xb2, 0x62, 0xd7, 0xb2, 0x7c, 0x21, 0x41, 0x9d,
+	0x69, 0xe6, 0x35, 0xe8, 0xde, 0x07, 0x8f, 0x1d, 0x65, 0x13, 0x3b, 0x74, 0xe9, 0x30, 0x30, 0xf3,
+	0x3c, 0xf3, 0x3c, 0x33, 0xfc, 0x66, 0xe0, 0x44, 0x1b, 0xc5, 0xea, 0x52, 0x13, 0xe7, 0xa3, 0xe9,
+	0x56, 0x58, 0xb6, 0xac, 0x0c, 0x25, 0x57, 0x20, 0xfb, 0x2b, 0x4b, 0x86, 0x47, 0xc4, 0x19, 0xbd,
+	0xaf, 0xc9, 0x32, 0x9e, 0x41, 0xa0, 0x89, 0x23, 0x2f, 0xf6, 0xd2, 0x5a, 0x1b, 0x9a, 0x6e, 0x63,
+	0x33, 0xf7, 0x73, 0x39, 0x69, 0xc1, 0xf1, 0x4e, 0xc2, 0x6a, 0xb5, 0xb2, 0xf4, 0x47, 0xe4, 0x19,
+	0xe4, 0x44, 0xcf, 0xa6, 0x4c, 0x3b, 0x87, 0xd4, 0xc1, 0x9f, 0xcf, 0x5c, 0x20, 0xcc, 0xfc, 0xf9,
+	0x0c, 0x11, 0xc2, 0xd5, 0x74, 0x49, 0x91, 0x1f, 0x7b, 0xa9, 0xc8, 0xdc, 0x1c, 0x53, 0xa8, 0x58,
+	0x9e, 0xf2, 0xda, 0x46, 0x41, 0xec, 0xa5, 0xf5, 0xb6, 0xfc, 0x29, 0x1e, 0x3b, 0x3d, 0xdb, 0xfa,
+	0x49, 0x15, 0xca, 0xbd, 0xa5, 0xe6, 0xcf, 0xc4, 0x40, 0x30, 0xa2, 0x7f, 0x6e, 0xc7, 0x73, 0x00,
+	0xfd, 0xa6, 0x58, 0x3d, 0xad, 0xcd, 0xc2, 0x46, 0x61, 0x1c, 0xa4, 0x22, 0x13, 0x4e, 0x99, 0x98,
+	0x85, 0xbd, 0x68, 0x81, 0x28, 0x32, 0x78, 0x04, 0xa2, 0xf3, 0xd8, 0xe9, 0x0f, 0x3a, 0x77, 0x83,
+	0x9e, 0x2c, 0x61, 0x0d, 0xaa, 0xa3, 0xde, 0xb0, 0xdb, 0x1f, 0xde, 0x4b, 0x0f, 0x0f, 0x20, 0x1c,
+	0x3f, 0x0c, 0xba, 0xd2, 0x6f, 0x7f, 0x79, 0x00, 0x79, 0x86, 0xcc, 0xc7, 0xfc, 0x95, 0xf0, 0x16,
+	0x44, 0xc1, 0x14, 0x4f, 0xb7, 0xf7, 0xd8, 0x7f, 0x97, 0x46, 0xf4, 0xdb, 0xd8, 0xe0, 0x4f, 0x4a,
+	0x78, 0x03, 0xa2, 0x40, 0x5c, 0x34, 0xec, 0x43, 0x6f, 0x1c, 0x6e, 0x8d, 0x0d, 0xab, 0xd2, 0x4b,
+	0xc5, 0xfd, 0x85, 0xeb, 0xef, 0x00, 0x00, 0x00, 0xff, 0xff, 0xc0, 0x22, 0xe7, 0x14, 0x22, 0x02,
+	0x00, 0x00,
 }

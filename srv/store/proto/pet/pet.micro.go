@@ -34,7 +34,8 @@ var _ server.Option
 // Client API for PetService service
 
 type PetService interface {
-	UpsertPets(ctx context.Context, in *UpsertPetsRequest, opts ...client.CallOption) (*UpsertPetsResponse, error)
+	InsertPet(ctx context.Context, in *InsertPetRequest, opts ...client.CallOption) (*InsertPetResponse, error)
+	UpdatePet(ctx context.Context, in *UpdatePetRequest, opts ...client.CallOption) (*Empty, error)
 }
 
 type petService struct {
@@ -55,9 +56,19 @@ func NewPetService(name string, c client.Client) PetService {
 	}
 }
 
-func (c *petService) UpsertPets(ctx context.Context, in *UpsertPetsRequest, opts ...client.CallOption) (*UpsertPetsResponse, error) {
-	req := c.c.NewRequest(c.name, "PetService.UpsertPets", in)
-	out := new(UpsertPetsResponse)
+func (c *petService) InsertPet(ctx context.Context, in *InsertPetRequest, opts ...client.CallOption) (*InsertPetResponse, error) {
+	req := c.c.NewRequest(c.name, "PetService.InsertPet", in)
+	out := new(InsertPetResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *petService) UpdatePet(ctx context.Context, in *UpdatePetRequest, opts ...client.CallOption) (*Empty, error) {
+	req := c.c.NewRequest(c.name, "PetService.UpdatePet", in)
+	out := new(Empty)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -68,12 +79,14 @@ func (c *petService) UpsertPets(ctx context.Context, in *UpsertPetsRequest, opts
 // Server API for PetService service
 
 type PetServiceHandler interface {
-	UpsertPets(context.Context, *UpsertPetsRequest, *UpsertPetsResponse) error
+	InsertPet(context.Context, *InsertPetRequest, *InsertPetResponse) error
+	UpdatePet(context.Context, *UpdatePetRequest, *Empty) error
 }
 
 func RegisterPetServiceHandler(s server.Server, hdlr PetServiceHandler, opts ...server.HandlerOption) error {
 	type petService interface {
-		UpsertPets(ctx context.Context, in *UpsertPetsRequest, out *UpsertPetsResponse) error
+		InsertPet(ctx context.Context, in *InsertPetRequest, out *InsertPetResponse) error
+		UpdatePet(ctx context.Context, in *UpdatePetRequest, out *Empty) error
 	}
 	type PetService struct {
 		petService
@@ -86,6 +99,10 @@ type petServiceHandler struct {
 	PetServiceHandler
 }
 
-func (h *petServiceHandler) UpsertPets(ctx context.Context, in *UpsertPetsRequest, out *UpsertPetsResponse) error {
-	return h.PetServiceHandler.UpsertPets(ctx, in, out)
+func (h *petServiceHandler) InsertPet(ctx context.Context, in *InsertPetRequest, out *InsertPetResponse) error {
+	return h.PetServiceHandler.InsertPet(ctx, in, out)
+}
+
+func (h *petServiceHandler) UpdatePet(ctx context.Context, in *UpdatePetRequest, out *Empty) error {
+	return h.PetServiceHandler.UpdatePet(ctx, in, out)
 }
