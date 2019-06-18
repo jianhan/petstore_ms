@@ -15,7 +15,17 @@ func (r InsertPetRequest) Validate() error {
 func (p Pet) Validate() error {
 	return validation.ValidateStruct(&p,
 		validation.Field(&p.Name, validation.Required),
-		validation.Field(&p.Status, validation.In(Available.String(), Pending.String(), Sold.String())),
+		validation.Field(&p.Status, validation.Required, validation.In(Available.String(), Pending.String(), Sold.String())),
+	)
+
+	return nil
+}
+
+func (r UpdatePetRequest) Validate() error {
+	return validation.ValidateStruct(&r,
+		validation.Field(&r.Id, validation.Required),
+		validation.Field(&r.Status, validation.Required, validation.In(Available.String(), Pending.String(), Sold.String())),
+		validation.Field(&r.Name, validation.Required),
 	)
 
 	return nil
