@@ -4,54 +4,63 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"github.com/jianhan/petstore_ms/srv/api/response"
 	store "github.com/jianhan/petstore_ms/srv/store/proto/pet"
 )
 
+// PetHandler defines method that pet handler will implement.
+type PetHandler interface {
+	InsertPet(w http.ResponseWriter, r *http.Request)
+	UpdatePet(w http.ResponseWriter, r *http.Request)
+}
+
+// petHandler implements PetHandler interface to process all pet related HTTP requests.
 type petHandler struct {
 	petService store.PetService
 }
 
-func (p *petHandler) insertPet(w http.ResponseWriter, r *http.Request) {
-	decoder := json.NewDecoder(r.Body)
+// InsertPet inserts a new pet via pet micro service.
+func (p *petHandler) InsertPet(w http.ResponseWriter, r *http.Request) {
 
+	// decode request
+	decoder := json.NewDecoder(r.Body)
 	var insertRequest *store.InsertPetRequest
 	if err := decoder.Decode(&insertRequest); err != nil {
-		errorWithJSON(w, err.Error(), http.StatusBadRequest)
+		response.WithJSONStr(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
+	// process insert pet via pet micro service of InsertPet method.
 	rsp, err := p.petService.InsertPet(r.Context(), insertRequest)
 	if err != nil {
-		errorWithJSON(w, err.Error(), http.StatusBadRequest)
+		response.WithJSONStr(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
-	petBytes, err := json.Marshal(&rsp.Pet)
-	if err != nil {
-		errorWithJSON(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	responseWithJSON(w, petBytes, http.StatusOK)
+	response.WithJSONData(w, rsp.Pet, http.StatusOK)
 }
 
-func (p *petHandler) updatePet(w http.ResponseWriter, r *http.Request) {
-	decoder := json.NewDecoder(r.Body)
+// UpdatePet handle update pet http call.
+func (p *petHandler) UpdatePet(w http.ResponseWriter, r *http.Request) {
 
+	// decode request
+	decoder := json.NewDecoder(r.Body)
 	var updateRequest *store.UpdatePetRequest
 	if err := decoder.Decode(&updateRequest); err != nil {
-		errorWithJSON(w, err.Error(), http.StatusBadRequest)
+		response.WithJSONStr(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
+	// process update pet via pet micro service with UpdatePet method.
 	if _, err := p.petService.UpdatePet(r.Context(), updateRequest); err != nil {
-		errorWithJSON(w, err.Error(), http.StatusBadRequest)
+		response.WithJSONStr(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
-	responseWithJSON(w, []byte{}, http.StatusOK)
+	response.WithJSONBytes(w, []byte{}, http.StatusOK)
 }
 
-func NewPetHandler(petService store.PetService) petHandler {
-	return petHandler{petService: petService}
+// NewPetHandler returns petHandler which implements PetHandler.
+func NewPetHandler(petService store.PetService) PetHandler {
+	return &petHandler{petService: petService}
 }
