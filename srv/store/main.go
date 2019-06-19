@@ -3,6 +3,8 @@
 package main
 
 import (
+	"time"
+
 	_ "github.com/go-sql-driver/mysql"
 	handler "github.com/jianhan/petstore_ms/srv/store/handler"
 	"github.com/jianhan/petstore_ms/srv/store/mysql"
@@ -21,7 +23,10 @@ func main() {
 	service := micro.NewService(
 		micro.Name("go.micro.srv.store"),
 		micro.Version("v1"),
+		micro.RegisterTTL(time.Second*30),
+		micro.RegisterInterval(time.Second*10),
 	)
+
 	service.Init()
 
 	// get db connection
