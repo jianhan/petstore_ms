@@ -34,7 +34,9 @@ func main() {
 	defer db.Close()
 
 	// register handlers
-	pet.RegisterPetServiceHandler(service.Server(), handler.NewPetServiceHandler(mysql.NewPetDataStore(db)))
+	if err := pet.RegisterPetServiceHandler(service.Server(), handler.NewPetServiceHandler(mysql.NewPetDataStore(db))); err != nil {
+		panic(err)
+	}
 
 	// run service
 	if err := service.Run(); err != nil {

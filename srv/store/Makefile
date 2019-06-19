@@ -5,7 +5,6 @@ GOCLEAN=$(GOCMD) clean
 GOTEST=$(GOCMD) test
 GOGET=$(GOCMD) get
 BINARY_NAME=store
-BINARY_UNIX=$(BINARY_NAME)_unix
 DIR_NAME=store
 
 all: mockgen test build pb lint
@@ -35,4 +34,4 @@ mockgen:
 	mockgen -destination=./mock/petservicehandler_mock.go -package=mock github.com/jianhan/petstore_ms/srv/store/proto/pet PetServiceHandler
 
 lint:
-	gometalinter.v2 ./... --vendor
+	golangci-lint run --exclude=mock ./...
