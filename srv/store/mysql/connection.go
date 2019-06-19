@@ -4,21 +4,28 @@ import (
 	"database/sql"
 	"fmt"
 	"os"
-
-	"github.com/sirupsen/logrus"
+	"sync"
 
 	_ "github.com/go-sql-driver/mysql"
 )
 
-func Connection() (*sql.DB, error) {
-	db, err := sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", os.Getenv("MYSQL_USERNAME"), os.Getenv("MYSQL_PASSWORD"),
-		os.Getenv("MYSQL_HOST"), os.Getenv("MYSQL_PORT"), os.Getenv("MYSQL_DATABASE")))
+var (
+	db   *sql.DB
+	once sync.Once
+)
 
-	// if error occur, log it for now
-	if err != nil {
-		logrus.Fatal(err)
-		return nil, err
-	}
+// Connection gets a new mysql database singleton connection.
+func Connection() *sql.DB {
+	once.Do(func() {
+		c, err := sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", os.Getenv("MYSQL_USERNAME"), os.Getenv("MYSQL_PASSWORD"),
+			os.Getenv("MYSQL_HOST"), os.Getenv("MYSQL_PORT"), os.Getenv("MYSQL_DATABASE")))
 
-	return db, nil
+		if err != nil {
+			panic(err)
+		}
+
+		db = c
+	})
+
+	return db
 }

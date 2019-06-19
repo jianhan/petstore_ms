@@ -13,6 +13,7 @@ import (
 	"github.com/micro/go-micro"
 )
 
+// main is entry point to launch store RPC micro service.
 func main() {
 	// load env
 	if err := godotenv.Load(); err != nil {
@@ -26,14 +27,10 @@ func main() {
 		micro.RegisterTTL(time.Second*30),
 		micro.RegisterInterval(time.Second*10),
 	)
-
 	service.Init()
 
 	// get db connection
-	db, err := mysql.Connection()
-	if err != nil {
-		panic(err)
-	}
+	db := mysql.Connection()
 	defer db.Close()
 
 	// register handlers
