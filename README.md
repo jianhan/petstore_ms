@@ -70,3 +70,6 @@ curl -d '{"id": 1,"name": "name updated","status": "available"}' -H "Content-Typ
 ### Unit test
 from root of project, `cd srv/store` then run `make test` to test store service.
 same way to test api service. Only two tests was written.
+
+### Note
+I only tested on mac an linux, both works fine.
