@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 	"os"
 	"time"
@@ -23,7 +22,7 @@ func main() {
 	// load env variables
 	err := godotenv.Load()
 	if err != nil {
-		log.Print("Error loading .env file")
+		logrus.Warn("Error loading .env file")
 	}
 
 	// initialize rpc service in order to inject into pet handler
@@ -42,7 +41,7 @@ func main() {
 	n.UseHandler(router)
 	srv := &http.Server{
 		Handler:      handlers.CORS()(n),
-		Addr:         fmt.Sprintf("%s:%s", os.Getenv("HOST"), os.Getenv("PORT")),
+		Addr:         fmt.Sprintf(":%s", os.Getenv("PORT")),
 		WriteTimeout: 20 * time.Second,
 		ReadTimeout:  20 * time.Second,
 	}

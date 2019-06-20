@@ -11,13 +11,14 @@ import (
 	pet "github.com/jianhan/petstore_ms/srv/store/proto/pet"
 	"github.com/joho/godotenv"
 	"github.com/micro/go-micro"
+	"github.com/sirupsen/logrus"
 )
 
 // main is entry point to launch store RPC micro service.
 func main() {
 	// load env
 	if err := godotenv.Load(); err != nil {
-		panic(err)
+		logrus.Warn("Error loading .env file")
 	}
 
 	// initialize service
